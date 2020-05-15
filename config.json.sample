@@ -1,0 +1,9 @@
+{
+  "UseSSL": true,
+  "SSLConfig": {
+    "KeyPath": "/path/to/.key",
+    "CertPath": "/path/to/.crt"
+  },
+  "Port": 6969,
+  "Host": "127.0.0.1"
+}
