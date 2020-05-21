@@ -8,7 +8,7 @@ let browser = undefined;
 module.exports = {
     init: async function() {
         browser = await puppeteer.launch({
-            args: ['--disable-setuid-sandbox']
+            args: ['--no-sandbox']
         });
     },
 
