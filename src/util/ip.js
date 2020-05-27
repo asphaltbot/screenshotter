@@ -12,20 +12,14 @@ module.exports = {
         });
     },
 
-    getIPv6: function() {
+    getIPv6: function () {
         return new Promise(function (resolve, reject) {
-            try {
-                request("GET", "http://v6.ipv6-test.com/api/myip.php")
-                    .getBody("utf-8")
-                    .error(e => console.log(e))
-                    .done(function (res) {
-                        resolve(res);
-                    })
-
-            } catch (e) {
-                resolve(undefined);
-            }
+            request("GET", "https://api6.ipify.org?format=json")
+                .getBody("utf-8")
+                .then(JSON.parse)
+                .done(function (res) {
+                    resolve(res.ip);
+                });
         })
     }
-
 }
