@@ -4,12 +4,23 @@ const ip = require("../util/ip");
 const fs = require("fs");
 
 let browser = undefined;
+let ipv4 = "";
+let ipv6 = "";
 
 module.exports = {
     init: async function() {
         browser = await puppeteer.launch({
             args: ['--no-sandbox']
         });
+
+        await ip.getIPv4().then(function (result) {
+           ipv4 = result;
+        });
+
+        await ip.getIPv6().then(function (result) {
+            ipv6 = result;
+        })
+
     },
 
     takeScreenshot: async function(req, repl) {
@@ -29,16 +40,16 @@ module.exports = {
 
             const pageHTML = await page.content();
 
-            let wasIPDetected = false;
-            await ip.getIP().then(function (result) {
-                if (pageHTML.includes(result)) {
-                    wasIPDetected = true;
-                }
-            });
-
-            if (wasIPDetected) {
+            if (pageHTML.contains(ipv4)) {
                 repl.type("application/json").code(403);
                 return {error: "The server's IP address was detected in the response body of the website"};
+            }
+
+            if (ipv6 !== undefined) {
+                if (pageHTML.contains(ipv6)) {
+                    repl.type("application/json").code(403);
+                    return {error: "The server's IP address was detected in the response body of the website"};
+                }
             }
 
             await page.screenshot({path: `${fileName}.png`});
