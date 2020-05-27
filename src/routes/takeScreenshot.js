@@ -21,6 +21,9 @@ module.exports = {
             ipv6 = result;
         })
 
+        console.log(`IPv4: ${ipv4}`);
+        console.log(`IPv6: ${ipv6}`);
+
     },
 
     takeScreenshot: async function(req, repl) {
