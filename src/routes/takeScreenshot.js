@@ -40,13 +40,13 @@ module.exports = {
 
             const pageHTML = await page.content();
 
-            if (pageHTML.contains(ipv4)) {
+            if (pageHTML.includes(ipv4)) {
                 repl.type("application/json").code(403);
                 return {error: "The server's IP address was detected in the response body of the website"};
             }
 
             if (ipv6 !== undefined) {
-                if (pageHTML.contains(ipv6)) {
+                if (pageHTML.includes(ipv6)) {
                     repl.type("application/json").code(403);
                     return {error: "The server's IP address was detected in the response body of the website"};
                 }
