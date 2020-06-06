@@ -58,10 +58,10 @@ module.exports = {
             await page.screenshot({path: `${fileName}.png`});
 
             const stream = fs.createReadStream(`${fileName}.png`);
-            fs.unlinkSync(`${fileName}.png`);
 
             repl.type('image/png');
             repl.send(stream);
+            fs.unlinkSync(`${fileName}.png`);
         } catch (err) {
             repl.type('application/json').code(500);
             return {error: err.message};
