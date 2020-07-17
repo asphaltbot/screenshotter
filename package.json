@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "fastify": "^3.0.1",
-    "puppeteer": "^5.0.0",
+    "puppeteer": "^5.2.0",
     "then-request": "^6.0.2"
   }
 }
