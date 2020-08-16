@@ -3,16 +3,11 @@ const random = require("../util/random");
 const ip = require("../util/ip");
 const fs = require("fs");
 
-let browser = undefined;
 let ipv4 = "";
 let ipv6 = "";
 
 module.exports = {
     init: async function() {
-        browser = await puppeteer.launch({
-            args: ['--no-sandbox']
-        });
-
         await ip.getIPv4().then(function (result) {
            ipv4 = result;
         });
@@ -28,6 +23,10 @@ module.exports = {
 
     takeScreenshot: async function(req, repl) {
         try {
+            const browser = await puppeteer.launch({
+                args: ['--no-sandbox']
+            });
+
             const fileName = random.generateRandomString(8);
             const requestBody = req.body;
 
@@ -56,6 +55,7 @@ module.exports = {
             }
 
             await page.screenshot({path: `${fileName}.png`});
+            await browser.close()
 
             const stream = fs.createReadStream(`${fileName}.png`);
 
