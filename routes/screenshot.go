@@ -8,6 +8,7 @@ import (
 	"github.com/chromedp/cdproto/page"
 	"github.com/chromedp/chromedp"
 	"github.com/kataras/iris/v12"
+	"github.com/mafredri/cdp/devtool"
 	"io/ioutil"
 	"log"
 	"os"
@@ -22,7 +23,18 @@ func RegisterScreenshotRoute(app *iris.Application) {
 }
 
 func TakeScreenshot(irisContext iris.Context) {
-	ctx, cancel := chromedp.NewContext(context.Background(), chromedp.WithDebugf(log.Printf))
+	bgContext := context.Background()
+	devTools := devtool.New("http://127.0.0.1:9222") // headless chrome running on docker
+	pt, err := devTools.Get(bgContext, devtool.Page)
+
+	if err != nil {
+		pt, err = devTools.Create(bgContext)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	allocCtx, cancel := chromedp.NewRemoteAllocator(context.Background(), pt.WebSocketDebuggerURL)
 	defer cancel()
 
 	bodyBytes, err := ioutil.ReadAll(irisContext.Request().Body)
@@ -33,7 +45,7 @@ func TakeScreenshot(irisContext iris.Context) {
 	util.CheckError(err)
 
 	var imageBuf []byte
-	if err := chromedp.Run(ctx, ScreenshotTasks(screenshotRequest.URL, &imageBuf)); err != nil {
+	if err := chromedp.Run(allocCtx, ScreenshotTasks(screenshotRequest.URL, &imageBuf)); err != nil {
 		log.Fatal(err)
 	}
 
