@@ -1,9 +1,19 @@
 {
   "UseSSL": true,
-  "SSLConfig": {
-    "KeyPath": "/path/to/.key",
-    "CertPath": "/path/to/.crt"
-  },
+  "SentryDsn": "",
   "Port": 6969,
-  "Host": "127.0.0.1"
+  "Domain": "screenshotter.example.com",
+  "Email": "connor@example.com",
+  "RequestLogging": {
+    "Enable": true,
+    "ShowStatus": true,
+    "ShowIP": true,
+    "ShowMethod": false,
+    "ShowPath": true,
+    "ShowQuery": false
+  },
+  "CORS": {
+    "Enable": true,
+    "AllowedOrigins": ["*"]
+  }
 }
