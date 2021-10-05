@@ -3,14 +3,15 @@ package routes
 import (
 	"context"
 	"encoding/json"
+	"io/ioutil"
+	"log"
+	"os"
+
 	"github.com/asphaltbot/screenshotter/util"
 	"github.com/chromedp/cdproto/emulation"
 	"github.com/chromedp/cdproto/page"
 	"github.com/chromedp/chromedp"
 	"github.com/kataras/iris/v12"
-	"io/ioutil"
-	"log"
-	"os"
 )
 
 type ScreenshotRequest struct {
@@ -23,6 +24,19 @@ func RegisterScreenshotRoute(app *iris.Application) {
 
 func TakeScreenshot(irisContext iris.Context) {
 	ctx, cancel := chromedp.NewContext(context.Background(), chromedp.WithDebugf(log.Printf))
+	defer cancel()
+
+	devTools := devtool.New("http://127.0.0.1:9222") // headless chrome running on docker
+	pt, err := devTools.Get(ctx, devtool.Page)
+
+	if err != nil {
+		pt, err = devTools.Create(ctx)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	allocCtx, cancel := chromedp.NewRemoteAllocator(context.Background(), pt.WebSocketDebuggerURL)
 	defer cancel()
 
 	bodyBytes, err := ioutil.ReadAll(irisContext.Request().Body)

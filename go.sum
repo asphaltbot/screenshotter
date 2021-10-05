@@ -148,8 +148,6 @@ github.com/kataras/blocks v0.0.2/go.mod h1:KPyOYc1M3MgzsznVcdjErtcYWO3AZXQbQ8fMY
 github.com/kataras/golog v0.0.9/go.mod h1:12HJgwBIZFNGL0EJnMRhmvGA0PQGx8VFwrZtM4CqbAk=
 github.com/kataras/golog v0.0.18 h1:Td7hcKN25yzqB/0SO5iohOsMk5Mq5V9kDtM5apaJLY0=
 github.com/kataras/golog v0.0.18/go.mod h1:jRYl7dFYqP8aQj9VkwdBUXYZSfUktm+YYg1arJILfyw=
-github.com/kataras/iris v0.0.1 h1:ed9VHYVEWjogpmnj3ERwdMg5k8NE7pIuW+BP5ChjJhk=
-github.com/kataras/iris v0.0.1/go.mod h1:ab8yy1jWHFgoI+/B+zoIsQpVY/XUY+NNvVCXJ27Zat8=
 github.com/kataras/iris/v12 v12.0.1/go.mod h1:udK4vLQKkdDqMGJJVd/msuMtN6hpYJhg/lSzuxjhO+U=
 github.com/kataras/iris/v12 v12.1.9-0.20200809192844-da029d6f3722 h1:N+pOYJglqppPTM29PbGgNSWKfruCXqaGWMiol4w61tw=
 github.com/kataras/iris/v12 v12.1.9-0.20200809192844-da029d6f3722/go.mod h1:cTaBLtn3jPr4QuZ9uF/o/GyWzpVfQLsk6uJpLLUUp8M=
